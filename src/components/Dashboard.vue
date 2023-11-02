@@ -32,81 +32,95 @@
     </div>
 
     <!-- Main Table Design -->
-    <table>
-      <thead>
-        <tr>
-          <td :colspan="12">Dashboard SLA</td>
-        </tr>
-        <tr>
-          <th colspan="3">{{ wwData }}</th>
-          <th colspan="8">Product Info</th>
-        </tr>
-        <tr>
-          <th>Status</th>
-          <th>Cores</th>
-          <th class="width1">Product</th>
-          <th class="width1">Lithography</th>
-          <th>Threads</th>
-          <th>Base Freq</th>
-          <th>Max Turbo Freq</th>
-        </tr>
-      </thead>
-      <tbody>
+    <Table>
+      <TableHeader>
+        <TableTr>
+          <TableTd :colspan="12">Dashboard SLA</TableTd>
+        </TableTr>
+        <TableTr>
+          <TableTh colspan="3">{{ wwData }}</TableTh>
+          <TableTh colspan="8">Product Info</TableTh>
+        </TableTr>
+        <TableTr>
+          <TableTh>Status</TableTh>
+          <TableTh>Cores</TableTh>
+          <TableTh class="width1">Product</TableTh>
+          <TableTh class="width1">Lithography</TableTh>
+          <TableTh>Threads</TableTh>
+          <TableTh>Base Freq</TableTh>
+          <TableTh>Max Turbo Freq</TableTh>
+        </TableTr>
+      </TableHeader>
+      <TableBody>
         <template v-for="(data, status, index) in productDataBystatus.data">
           <!-- status -->
-          <tr>
-            <td class="width1" :rowspan="calstatusRowspan(data)">
+          <TableTr>
+            <TableTd class="width1" :rowspan="calstatusRowspan(data)">
               {{ status }}
-            </td>
-          </tr>
+            </TableTd>
+          </TableTr>
 
           <template v-for="cores in Object.keys(data)">
             <!-- cores -->
-            <tr>
-              <td class="width1" :rowspan="Object.keys(data[cores]).length + 1">
+            <TableTr>
+              <TableTd
+                class="width1"
+                :rowspan="Object.keys(data[cores]).length + 1"
+              >
                 {{ cores }}
-              </td>
-            </tr>
+              </TableTd>
+            </TableTr>
 
-            <tr v-for="(v, k) in data[cores]">
+            <TableTr v-for="(v, k) in data[cores]">
               <!-- product -->
-              <td class="productColumn">{{ v.Product }}</td>
+              <TableTd class="productColumn">{{ v.Product }}</TableTd>
 
               <!-- Lithography -->
-              <td>{{ v.Lithography }}</td>
+              <TableTd>{{ v.Lithography }}</TableTd>
 
               <!-- Threads -->
-              <td>
+              <TableTd>
                 <div class="innerCells">
                   <input :value="v.Threads" :disabled="true" type="text" />
                 </div>
-              </td>
+              </TableTd>
 
               <!-- Base Freq -->
-              <td>
+              <TableTd>
                 <div class="innerCells">
                   <input :value="v.Base_Freq" :disabled="true" type="text" />
                 </div>
-              </td>
+              </TableTd>
 
               <!-- Max Turbo Freq -->
-              <td>
+              <TableTd>
                 <div class="innerCells">
-                  <input :value="v.Max_Turbo_Freq" type="text" :disabled="true" />
+                  <input
+                    :value="v.Max_Turbo_Freq"
+                    type="text"
+                    :disabled="true"
+                  />
                 </div>
-              </td>
-            </tr>
+              </TableTd>
+            </TableTr>
           </template>
         </template>
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
     <!-- End of Table Design -->
   </div>
 </template>
 
-
 <script>
 import data from "../assets/data.json";
+import Table from "./table/Table.vue";
+import Table from "../components/table/Table.vue";
+import TableHeader from "../components/table/TableHeader.vue";
+import TableBody from "../components/table/TableBody.vue";
+import TableTr from "../components/table/TableTr.vue";
+import TableTd from "../components/table/TableTd.vue";
+import TableTh from "../components/table/TableTh.vue";
+
 export default {
   data: function () {
     return {
@@ -125,31 +139,24 @@ export default {
     wwData() {
       return `${this.wwInfo.year}WW${this.wwInfo.workweek}.${this.wwInfo.numofday}`;
     },
-
     productDataBystatus() {
       let tmp = {};
       let data = this.UIData;
       let statusSet = new Set();
-
       data.forEach((element) => {
         let status = element.Status;
         let cores = element.Cores;
-
         // push status to set
         statusSet.add(status);
-
         if (this.hidestatus.includes(status)) return; // Hide by status
         if (!tmp[status]) tmp[status] = {};
         if (!tmp[status][cores]) tmp[status][cores] = [];
-
         tmp[status][cores].push(element);
       });
-
       // sort status in order
       const strings = new Set(statusSet);
       const sortedStringsArray = [...strings].sort();
       statusSet = new Set(sortedStringsArray);
-
       return {
         status: [...statusSet],
         data: tmp,
@@ -168,7 +175,6 @@ export default {
       let currentDate = date || new Date();
       let startDate = new Date(currentDate.getFullYear(), 0, 1);
       let days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
-
       return {
         year: currentDate.getFullYear(),
         workweek: Math.ceil(days / 7),
@@ -180,14 +186,11 @@ export default {
         this.hidestatus = [];
         this.allCheckBox = [];
       }
-
       if (document.querySelector(".styled").checked) {
         this.hidestatus = this.productDataBystatus.status;
         this.allCheckBox = this.productDataBystatus.status;
       }
-
       this.allCheck = !this.allCheck;
-
       if (this.allCheck) {
       } else {
         this.hidestatus = [];
@@ -197,7 +200,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .fas.fa-times {
