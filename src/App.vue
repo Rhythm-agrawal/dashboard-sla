@@ -1,9 +1,9 @@
 <script setup>
-import TheTable from "./components/table.vue";
+import Dashboard from "./components/Dashboard.vue";
 </script>
 
 <template>
   <div id="app">
-    <TheTable />
+    <Dashboard />
   </div>
 </template>
