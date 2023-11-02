@@ -112,47 +112,69 @@
 </template>
 
 <script>
+import { ref, computed } from "vue";
 import data from "../assets/data.json";
-import Table from "./table/Table.vue";
 import Table from "../components/table/Table.vue";
 import TableHeader from "../components/table/TableHeader.vue";
 import TableBody from "../components/table/TableBody.vue";
+import TableFooter from "../components/table/TableFooter.vue";
 import TableTr from "../components/table/TableTr.vue";
 import TableTd from "../components/table/TableTd.vue";
 import TableTh from "../components/table/TableTh.vue";
 
 export default {
-  data: function () {
-    return {
-      hidestatus: [],
-      allCheckBox: [],
-      UIData: [],
-      wwInfo: {},
-      allCheck: false,
+  name: "Dashboard",
+  components: {
+    Table,
+    TableTr,
+    TableTd,
+    TableTh,
+    TableHeader,
+    TableBody,
+    TableFooter,
+  },
+  setup() {
+    const now = new Date();
+    let dataRef = data;
+    let UIData = data;
+    let allCheck = false;
+    let wwInfo = {
+      year: now.getFullYear(),
+      workweek: Math.ceil(
+        Math.floor(
+          (now - new Date(now.getFullYear(), 0, 1)) / (24 * 60 * 60 * 1000)
+        ) / 7
+      ),
+      numofday: now.getDay(),
     };
-  },
-  mounted() {
-    this.UIData = data;
-    this.wwInfo = this.getWWFromDate();
-  },
-  computed: {
-    wwData() {
-      return `${this.wwInfo.year}WW${this.wwInfo.workweek}.${this.wwInfo.numofday}`;
-    },
-    productDataBystatus() {
+
+    /***** Reactive properties*****/
+    let perPage = ref(50);
+    let currentPage = ref(1);
+    let hidestatus = ref([]);
+    let allCheckBox = ref([]);
+
+    /***** COMPUTED PROPERTIES *****/
+    const wwData = computed(
+      () => `${wwInfo.year}WW${wwInfo.workweek}.${wwInfo.numofday}`
+    );
+
+    let productDataBystatus = computed(() => {
       let tmp = {};
-      let data = this.UIData;
+      let data = UIData;
       let statusSet = new Set();
+
       data.forEach((element) => {
         let status = element.Status;
         let cores = element.Cores;
         // push status to set
         statusSet.add(status);
-        if (this.hidestatus.includes(status)) return; // Hide by status
+        if (hidestatus.value.includes(status)) return; // Hide by status
         if (!tmp[status]) tmp[status] = {};
         if (!tmp[status][cores]) tmp[status][cores] = [];
         tmp[status][cores].push(element);
       });
+
       // sort status in order
       const strings = new Set(statusSet);
       const sortedStringsArray = [...strings].sort();
@@ -161,47 +183,51 @@ export default {
         status: [...statusSet],
         data: tmp,
       };
-    },
-  },
-  methods: {
-    calstatusRowspan(data) {
+    });
+
+    /***** METHODS *****/
+    const setCurrentPage = (page) => (currentPage.value = page);
+    const hideShowALLstatus = () => {
+      if (!document.querySelector(".styled").checked) {
+        hidestatus.value = [];
+        allCheckBox.value = [];
+      } else {
+        hidestatus.value = paginationMeta.value.statuses;
+        allCheckBox.value = paginationMeta.value.statuses;
+      }
+      allCheck = !allCheck.value;
+      if (!allCheck) {
+        hidestatus.value = [];
+        allCheckBox.value = [];
+      }
+    };
+    const calstatusRowspan = (data) => {
       let sum = Object.keys(data).length + 1;
       for (const cores in data) {
         sum += Object.keys(data[cores]).length;
       }
       return sum;
-    },
-    getWWFromDate(date = null) {
-      let currentDate = date || new Date();
-      let startDate = new Date(currentDate.getFullYear(), 0, 1);
-      let days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
-      return {
-        year: currentDate.getFullYear(),
-        workweek: Math.ceil(days / 7),
-        numofday: currentDate.getDay(),
-      };
-    },
-    hideShowALLstatus() {
-      if (!document.querySelector(".styled").checked) {
-        this.hidestatus = [];
-        this.allCheckBox = [];
-      }
-      if (document.querySelector(".styled").checked) {
-        this.hidestatus = this.productDataBystatus.status;
-        this.allCheckBox = this.productDataBystatus.status;
-      }
-      this.allCheck = !this.allCheck;
-      if (this.allCheck) {
-      } else {
-        this.hidestatus = [];
-        this.allCheckBox = [];
-      }
-    },
+    };
+
+    return {
+      hidestatus,
+      allCheckBox,
+      UIData,
+      wwInfo,
+      allCheck,
+      dataRef,
+      perPage,
+      wwData,
+      hideShowALLstatus,
+      productDataBystatus,
+      setCurrentPage,
+      calstatusRowspan,
+    };
   },
 };
 </script>
 
-<style scoped>
+<style>
 .fas.fa-times {
   display: none;
 }
