@@ -6,17 +6,17 @@
       <div class="checkbox">
         <!-- All status -->
         <input
-          :id="productDataBystatus.status"
+          :id="paginationMeta.statuses"
           type="checkbox"
           class="styled"
-          :value="productDataBystatus.status"
+          :value="paginationMeta.statuses"
           @change="hideShowALLstatus"
           v-model="allCheck"
         />
-        <label :for="productDataBystatus.status">All statuses</label>
+        <label :for="paginationMeta.statuses">All statuses</label>
 
         <!-- Dynamic status -->
-        <div v-for="status in productDataBystatus.status" :key="`${status}`">
+        <div v-for="status in paginationMeta.statuses" :key="`${status}`">
           <input
             :id="`${status}`"
             type="checkbox"
@@ -30,6 +30,17 @@
         </div>
       </div>
     </div>
+
+    <label>
+      Show per page
+      <select v-model="perPage">
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+      </select>
+      entries
+    </label>
 
     <!-- Main Table Design -->
     <Table>
@@ -52,7 +63,7 @@
         </TableTr>
       </TableHeader>
       <TableBody>
-        <template v-for="(data, status, index) in productDataBystatus.data">
+        <template v-for="(data, status, index) in paginationMeta.data">
           <!-- status -->
           <TableTr>
             <TableTd class="width1" :rowspan="calstatusRowspan(data)">
@@ -109,6 +120,16 @@
           </template>
         </template>
       </TableBody>
+
+      <TableFooter>
+        <ul>
+          <li v-for="number in paginationMeta.pages">
+            <button type="button" @click="setCurrentPage(number)">
+              {{ number }}
+            </button>
+          </li>
+        </ul>
+      </TableFooter>
     </Table>
     <!-- End of Table Design -->
   </div>
@@ -162,29 +183,49 @@ export default {
       () => `${wwInfo.year}WW${wwInfo.workweek}.${wwInfo.numofday}`
     );
 
-    let productDataBystatus = computed(() => {
+    let paginationMeta = computed(() => {
       let tmp = {};
+      let _data = [];
       let data = UIData;
       let statusSet = new Set();
 
       data.forEach((element) => {
         let status = element.Status;
-        let cores = element.Cores;
+        // let cores = element.Cores;
         // push status to set
         statusSet.add(status);
         if (hidestatus.value.includes(status)) return; // Hide by status
-        if (!tmp[status]) tmp[status] = {};
-        if (!tmp[status][cores]) tmp[status][cores] = [];
-        tmp[status][cores].push(element);
+        _data.push(element);
       });
+
+      //currentPage.value = 1;
+      _data
+        .slice(
+          currentPage.value * perPage.value - perPage.value,
+          currentPage.value * perPage.value
+        )
+        .forEach((element) => {
+          let status = element.Status;
+          let cores = element.Cores;
+
+          if (!tmp[status]) tmp[status] = {};
+          if (!tmp[status][cores]) tmp[status][cores] = [];
+          tmp[status][cores].push(element);
+        });
 
       // sort status in order
       const strings = new Set(statusSet);
       const sortedStringsArray = [...strings].sort();
       statusSet = new Set(sortedStringsArray);
+
       return {
-        status: [...statusSet],
+        totalPages: Math.ceil(_data.length / perPage.value),
         data: tmp,
+        pages: Array.from(
+          { length: Math.ceil(_data.length / perPage.value) },
+          (_, i) => i + 1
+        ),
+        statuses: [...statusSet],
       };
     });
 
@@ -233,7 +274,7 @@ export default {
       perPage,
       wwData,
       hideShowALLstatus,
-      productDataBystatus,
+      paginationMeta,
       setCurrentPage,
       calstatusRowspan,
       getStatusClass,
@@ -350,7 +391,7 @@ input[disabled] {
   margin-right: 2%;
 }
 
-select {
+/* select {
   position: absolute;
   top: 0;
   right: 0;
@@ -358,7 +399,7 @@ select {
   bottom: 0;
   text-align: center;
   border: 0;
-}
+} */
 
 table tr td:not(.skip),
 table tr th {
@@ -435,7 +476,7 @@ th {
 
 .productColumn {
   width: 1%;
-  background-color: white;
+  /* background-color: white; */
 }
 
 .checkbox {
