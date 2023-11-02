@@ -10,8 +10,8 @@
           type="checkbox"
           class="styled"
           :value="productDataBystatus.status"
-          @click="hideShowALLstatus"
-          v-model="hidestatus"
+          @change="hideShowALLstatus"
+          v-model="allCheck"
         />
         <label :for="productDataBystatus.status">All statuses</label>
 
