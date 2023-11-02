@@ -71,9 +71,12 @@
               </TableTd>
             </TableTr>
 
-            <TableTr v-for="(v, k) in data[cores]">
+            <TableTr
+              v-for="(v, k) in data[cores]"
+              :class="getStatusClass(status)"
+            >
               <!-- product -->
-              <TableTd class="productColumn">{{ v.Product }}</TableTd>
+              <TableTd :class="getStatusClass(status)">{{ v.Product }}</TableTd>
 
               <!-- Lithography -->
               <TableTd>{{ v.Lithography }}</TableTd>
@@ -185,6 +188,17 @@ export default {
       };
     });
 
+    const getStatusClass = (status) => {
+      const formattedStatus = status
+        ? status
+            .toLowerCase()
+            .split(" ")
+            .join("_")
+            .replace(/[^a-z]/gi, "")
+        : "";
+      return formattedStatus || "default";
+    };
+
     /***** METHODS *****/
     const setCurrentPage = (page) => (currentPage.value = page);
     const hideShowALLstatus = () => {
@@ -222,6 +236,7 @@ export default {
       productDataBystatus,
       setCurrentPage,
       calstatusRowspan,
+      getStatusClass,
     };
   },
 };
@@ -355,6 +370,37 @@ th {
   padding: 2px !important;
   width: 100px;
   border: 1px solid black;
+}
+
+/* CSS variables */
+:root {
+  --announced-bg: green;
+  --launched-bg: #00b0f0;
+  --launchedwithipu-bg: yellow;
+  --discontinued-bg: red;
+  --default-bg: #ccc;
+}
+
+/* Styling based on CSS variables */
+.announced {
+  width: 1%;
+  background-color: var(--announced-bg);
+}
+.launched {
+  width: 1%;
+  background-color: var(--launched-bg);
+}
+.launchedwithipu {
+  width: 1%;
+  background-color: var(--launchedwithipu-bg);
+}
+.discontinued {
+  width: 1%;
+  background-color: var(--discontinued-bg);
+}
+.default {
+  width: 1%;
+  background-color: var(--default-bg);
 }
 
 .reference {
