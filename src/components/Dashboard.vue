@@ -181,7 +181,7 @@ export default {
     };
 
     /***** Reactive properties*****/
-    let perPage = ref(50);
+    let perPage = ref(100);
     let currentPage = ref(1);
     let hidestatus = ref([]);
     let allCheckBox = ref([]);
@@ -259,6 +259,7 @@ export default {
             .join("_")
             .replace(/[^a-z]/gi, "")
         : "";
+      console.log(formattedStatus);
       return formattedStatus || "default";
     };
 
