@@ -42,6 +42,8 @@
       entries
     </label>
 
+    <input type="search" placeholder="Search" />
+
     <!-- Main Table Design -->
     <Table>
       <TableHeader>
