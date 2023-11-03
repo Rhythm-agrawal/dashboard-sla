@@ -42,7 +42,7 @@
       entries
     </label>
 
-    <input type="search" placeholder="Search" />
+    <input type="search" placeholder="Search" v-model="searchKeywords" />
 
     <!-- Main Table Design -->
     <Table>
@@ -185,6 +185,7 @@ export default {
     let currentPage = ref(1);
     let hidestatus = ref([]);
     let allCheckBox = ref([]);
+    const searchKeywords = ref("");
 
     /***** COMPUTED PROPERTIES *****/
     const wwData = computed(
@@ -203,7 +204,20 @@ export default {
         // push status to set
         statusSet.add(status);
         if (hidestatus.value.includes(status)) return; // Hide by status
-        _data.push(element);
+        if (searchKeywords !== "") {
+          if (
+            Object.values(element).some((value) =>
+              value
+                .toString()
+                .toLowerCase()
+                .includes(searchKeywords.value.toLowerCase())
+            )
+          ) {
+            _data.push(element);
+          }
+        } else {
+          _data.push(element);
+        }
       });
 
       //currentPage.value = 1;
@@ -287,6 +301,7 @@ export default {
       calstatusRowspan,
       getStatusClass,
       currentPage,
+      searchKeywords,
     };
   },
 };
