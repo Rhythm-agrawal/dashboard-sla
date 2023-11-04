@@ -133,14 +133,24 @@
               <!-- Threads -->
               <TableTd>
                 <div class="innerCells">
-                  <input :value="v.Threads" :disabled="true" type="text" />
+                  <input
+                    class="w-100 border-0"
+                    :value="v.Threads"
+                    :disabled="true"
+                    type="text"
+                  />
                 </div>
               </TableTd>
 
               <!-- Base Freq -->
               <TableTd>
                 <div class="innerCells">
-                  <input :value="v.Base_Freq" :disabled="true" type="text" />
+                  <input
+                    class="w-100 border-0"
+                    :value="v.Base_Freq"
+                    :disabled="true"
+                    type="text"
+                  />
                 </div>
               </TableTd>
 
@@ -148,6 +158,7 @@
               <TableTd>
                 <div class="innerCells">
                   <input
+                    class="w-100 border-0"
                     :value="v.Max_Turbo_Freq"
                     type="text"
                     :disabled="true"
