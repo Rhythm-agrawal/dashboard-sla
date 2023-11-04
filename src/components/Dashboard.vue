@@ -124,19 +124,7 @@
       </TableBody>
 
       <TableFooter>
-        <div class="pagination">
-          <span>
-            <a
-              v-for="number in paginationMeta.pages"
-              role="button"
-              :class="
-                'paginate_button ' + (number === currentPage ? 'active' : '')
-              "
-              @click="setCurrentPage(number)"
-              >{{ number }}</a
-            >
-          </span>
-        </div>
+        <Pagination :data="paginationMeta.pages" :callback="setCurrentPage" />
       </TableFooter>
     </Table>
     <!-- End of Table Design -->
@@ -146,6 +134,7 @@
 <script>
 import { ref, computed } from "vue";
 import data from "../assets/data.json";
+import Pagination from "../components/Pagination.vue";
 import Table from "../components/table/Table.vue";
 import TableHeader from "../components/table/TableHeader.vue";
 import TableBody from "../components/table/TableBody.vue";
@@ -164,6 +153,7 @@ export default {
     TableHeader,
     TableBody,
     TableFooter,
+    Pagination,
   },
   setup() {
     const now = new Date();
@@ -198,24 +188,21 @@ export default {
       let data = UIData;
       let statusSet = new Set();
 
+      /*** Take statuses & search by input */
       data.forEach((element) => {
         let status = element.Status;
-        // let cores = element.Cores;
+
         // push status to set
         statusSet.add(status);
         if (hidestatus.value.includes(status)) return; // Hide by status
-        if (searchKeywords !== "") {
-          if (
-            Object.values(element).some((value) =>
-              value
-                .toString()
-                .toLowerCase()
-                .includes(searchKeywords.value.toLowerCase())
-            )
-          ) {
-            _data.push(element);
-          }
-        } else {
+        if (
+          Object.values(element).some((value) =>
+            value
+              .toString()
+              .toLowerCase()
+              .includes(searchKeywords.value.toLowerCase())
+          )
+        ) {
           _data.push(element);
         }
       });
