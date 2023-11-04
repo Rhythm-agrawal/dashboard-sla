@@ -536,33 +536,47 @@ th {
 }
 
 /* Styling based on CSS variables */
-.announced {
+.announced,
+.announced td,
+.announced th {
   /*width: 1%;*/
   background-color: var(--announced-bg);
 }
-.launched {
+.launched,
+.launched td,
+.launched th {
   /*width: 1%;*/
   background-color: var(--launched-bg);
 }
-.launchedwithipu {
+.launchedwithipu,
+.launchedwithipu td,
+.launchedwithipu th {
   /*width: 1%;*/
   background-color: var(--launchedwithipu-bg);
 }
-.discontinued {
+.discontinued,
+.discontinued td,
+.discontinued th {
   /*width: 1%;*/
   background-color: var(--discontinued-bg);
 }
-.default {
+.default,
+.default td,
+.default th {
   /*width: 1%;*/
   background-color: var(--default-bg);
 }
 
-.reference {
+.reference,
+.reference td,
+.reference th {
   /*width: 1%;*/
   background-color: #00b0f0;
 }
 
-.released {
+.released,
+.released td,
+.released th {
   /*width: 1%;*/
   background-color: #7fff00;
 }
