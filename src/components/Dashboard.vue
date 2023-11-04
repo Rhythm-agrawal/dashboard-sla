@@ -112,10 +112,7 @@
           <template v-for="cores in Object.keys(data)">
             <!-- cores -->
             <TableTr>
-              <TableTd
-                class="width1"
-                :rowspan="Object.keys(data[cores]).length + 1"
-              >
+              <TableTd :rowspan="Object.keys(data[cores]).length + 1">
                 {{ cores }}
               </TableTd>
             </TableTr>
@@ -258,6 +255,7 @@ export default {
         statusSet.add(status);
         if (hidestatus.value.includes(status)) return; // Hide by status
         if (searchKeywords !== "") {
+          /***** Filterable columns ****/
           let searchableColumns = [
             "Product",
             "Status",
@@ -365,7 +363,7 @@ export default {
       return sum;
     };
 
-    const statusesPieChart = ref({
+    const statusesPieChart = computed(() => ({
       series: [
         {
           name: "Products",
@@ -373,7 +371,7 @@ export default {
           data: paginationMeta.value.stats,
         },
       ],
-    });
+    }));
 
     return {
       hidestatus,
