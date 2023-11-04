@@ -1,17 +1,16 @@
 <template>
-  <div class="row">
-    <div class="col-md-12 text-end">
-      <button @click="toggleTheme" class="btn btn-link">
-        {{ isDarkTheme ? "Switch to Light Mode" : "Switch to Dark Mode" }}
-      </button>
-    </div>
-  </div>
+  <a @click="toggleTheme" :class="'btn ' + className">
+    {{ isDarkTheme ? "Switch to Light Mode" : "Switch to Dark Mode" }}
+  </a>
 </template>
 
 <script>
 import { ref, onBeforeMount, watch } from "vue";
 export default {
   name: "ThemeSwitcher",
+  props: {
+    className: String,
+  },
   setup() {
     const isDarkTheme = ref(false);
     const toggleTheme = () => {

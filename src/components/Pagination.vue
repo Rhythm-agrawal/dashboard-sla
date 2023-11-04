@@ -1,6 +1,6 @@
 <template>
   <nav aria-label="Pagination">
-    <ul class="pagination">
+    <ul class="pagination justify-content-center">
       <li
         v-for="number in data"
         :class="'page-item' + (number === activePage ? ' active' : '')"

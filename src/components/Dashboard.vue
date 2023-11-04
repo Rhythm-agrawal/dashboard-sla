@@ -1,46 +1,68 @@
 <template>
   <div>
     <!-- Hide By status Bar -->
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-check form-check-inline">
-          <label class="form-check-label" for="hide_all">Hide:</label>
-          <input
-            class="form-check-input styled"
-            :id="paginationMeta.statuses"
-            type="checkbox"
-            :value="paginationMeta.statuses"
-            @change="hideShowALLstatus"
-            v-model="allCheck"
-          />
-        </div>
-
-        <div class="form-check form-check-inline">
-          <!-- All status -->
-          <strong :for="paginationMeta.statuses">All statuses</strong>
-        </div>
-
-        <!-- Dynamic status -->
-        <div
-          v-for="status in paginationMeta.statuses"
-          :key="`${status}`"
-          class="form-check form-check-inline"
+    <nav class="navbar navbar-expand-lg bg-dark mb-5" data-bs-theme="dark">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarText"
+          aria-controls="navbarText"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
-          <input
-            :id="`${status}`"
-            type="checkbox"
-            class="form-check-input styled"
-            :value="status"
-            v-model="hidestatus"
-          />
-          <label :for="`${status}`">
-            {{ status }}
-          </label>
-        </div>
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <hr />
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <div class="form-check form-check-inline nav-link">
+                <label class="form-check-label" for="hide_all">Hide:</label>
+                <input
+                  class="form-check-input styled"
+                  :id="paginationMeta.statuses"
+                  type="checkbox"
+                  :value="paginationMeta.statuses"
+                  @change="hideShowALLstatus"
+                  v-model="allCheck"
+                />
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <div class="form-check form-check-inline nav-link">
+                <!-- All status -->
+                <strong :for="paginationMeta.statuses">All statuses</strong>
+              </div>
+            </li>
+
+            <li
+              v-for="status in paginationMeta.statuses"
+              :key="`${status}`"
+              class="nav-item"
+            >
+              <!-- Dynamic status -->
+              <div class="form-check form-check-inline nav-link">
+                <input
+                  :id="`${status}`"
+                  type="checkbox"
+                  class="form-check-input styled"
+                  :value="status"
+                  v-model="hidestatus"
+                />
+                <span :for="`${status}`"> {{ status }} </span>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <ThemeSwitcher className="nav-link" />
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </nav>
 
     <div class="row">
       <div class="col-md-4">
@@ -174,17 +196,19 @@
           </template>
         </template>
       </TableBody>
+    </Table>
 
-      <TableFooter>
+    <div class="row">
+      <div class="col-12">
         <Pagination
           :activePage="currentPage"
           :data="paginationMeta.pages"
           :callback="setCurrentPage"
         />
-      </TableFooter>
-    </Table>
-    <!-- End of Table Design -->
+      </div>
+    </div>
   </div>
+  <!-- End of Table Design -->
 </template>
 
 <script>
@@ -199,6 +223,7 @@ import TableTr from "../components/table/TableTr.vue";
 import TableTd from "../components/table/TableTd.vue";
 import TableTh from "../components/table/TableTh.vue";
 import PieChart from "../components/charts/PieChart.vue";
+import ThemeSwitcher from "../components/ThemeSwitcher.vue";
 
 export default {
   name: "Dashboard",
@@ -212,6 +237,7 @@ export default {
     TableFooter,
     Pagination,
     PieChart,
+    ThemeSwitcher,
   },
   setup() {
     const now = new Date();
