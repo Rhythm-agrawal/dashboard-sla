@@ -1,4 +1,5 @@
 <script setup>
+import "./assets/main.css";
 import Dashboard from "./components/Dashboard.vue";
 </script>
 
