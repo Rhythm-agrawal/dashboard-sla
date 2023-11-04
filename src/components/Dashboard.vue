@@ -90,13 +90,13 @@
           <TableTh colspan="8">Product Info</TableTh>
         </TableTr>
         <TableTr>
-          <TableTh>Status</TableTh>
-          <TableTh>Cores</TableTh>
-          <TableTh class="width1">Product</TableTh>
-          <TableTh class="width1">Lithography</TableTh>
-          <TableTh>Threads</TableTh>
-          <TableTh>Base Freq</TableTh>
-          <TableTh>Max Turbo Freq</TableTh>
+          <TableTh class="text-nowrap">Status</TableTh>
+          <TableTh class="text-nowrap">Cores</TableTh>
+          <TableTh class="text-nowrap">Product</TableTh>
+          <TableTh class="text-nowrap">Lithography</TableTh>
+          <TableTh class="text-nowrap">Threads</TableTh>
+          <TableTh class="text-nowrap">Base Freq</TableTh>
+          <TableTh class="text-nowrap">Max Turbo Freq</TableTh>
         </TableTr>
       </TableHeader>
 
@@ -104,7 +104,7 @@
         <template v-for="(data, status, index) in paginationMeta.data">
           <!-- status -->
           <TableTr>
-            <TableTd class="width1" :rowspan="calstatusRowspan(data)">
+            <TableTd class="text-nowrap" :rowspan="calstatusRowspan(data)">
               {{ status }}
             </TableTd>
           </TableTr>
@@ -125,7 +125,15 @@
               :class="getStatusClass(status)"
             >
               <!-- product -->
-              <TableTd :class="getStatusClass(status)">{{ v.Product }}</TableTd>
+
+              <TableTd
+                :class="[
+                  getStatusClass(status),
+                  'text-nowrap',
+                  'productColumn',
+                ]"
+                >{{ v.Product }}</TableTd
+              >
 
               <!-- Lithography -->
               <TableTd>{{ v.Lithography }}</TableTd>
