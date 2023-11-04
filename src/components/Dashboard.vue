@@ -199,14 +199,31 @@ export default {
         // push status to set
         statusSet.add(status);
         if (hidestatus.value.includes(status)) return; // Hide by status
-        if (
-          Object.values(element).some((value) =>
-            value
-              .toString()
-              .toLowerCase()
-              .includes(searchKeywords.value.toLowerCase())
-          )
-        ) {
+        if (searchKeywords !== "") {
+          let searchableColumns = [
+            "Product",
+            "Status",
+            "Cores",
+            "Threads",
+            "Max_Turbo_Freq",
+            "Base_Freq",
+            "Cache(MB)",
+          ];
+
+          if (
+            searchableColumns.some((key) => {
+              const value = element[key]
+                ? element[key].toString().toLowerCase()
+                : "";
+              return value
+                .toString()
+                .toLowerCase()
+                .includes(String(searchKeywords.value).toLowerCase());
+            })
+          ) {
+            _data.push(element);
+          }
+        } else {
           _data.push(element);
         }
       });
