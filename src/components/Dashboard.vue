@@ -1,26 +1,35 @@
 <template>
   <div>
     <!-- Hide By status Bar -->
-    <div class="hideBar">
-      <label class="hideLabel"> Hide: </label>
-      <div class="checkbox">
-        <!-- All status -->
-        <input
-          :id="paginationMeta.statuses"
-          type="checkbox"
-          class="styled"
-          :value="paginationMeta.statuses"
-          @change="hideShowALLstatus"
-          v-model="allCheck"
-        />
-        <label :for="paginationMeta.statuses">All statuses</label>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-check form-check-inline">
+          <label class="form-check-label" for="hide_all">Hide:</label>
+          <input
+            class="form-check-input styled"
+            :id="paginationMeta.statuses"
+            type="checkbox"
+            :value="paginationMeta.statuses"
+            @change="hideShowALLstatus"
+            v-model="allCheck"
+          />
+        </div>
+
+        <div class="form-check form-check-inline">
+          <!-- All status -->
+          <strong :for="paginationMeta.statuses">All statuses</strong>
+        </div>
 
         <!-- Dynamic status -->
-        <div v-for="status in paginationMeta.statuses" :key="`${status}`">
+        <div
+          v-for="status in paginationMeta.statuses"
+          :key="`${status}`"
+          class="form-check form-check-inline"
+        >
           <input
             :id="`${status}`"
             type="checkbox"
-            class="styled"
+            class="form-check-input styled"
             :value="status"
             v-model="hidestatus"
           />
@@ -28,6 +37,8 @@
             {{ status }}
           </label>
         </div>
+
+        <hr />
       </div>
     </div>
 
@@ -64,6 +75,7 @@
           <TableTh>Max Turbo Freq</TableTh>
         </TableTr>
       </TableHeader>
+
       <TableBody>
         <template v-for="(data, status, index) in paginationMeta.data">
           <!-- status -->
@@ -366,7 +378,7 @@ i {
   margin-right: 4%;
 }
 
-.inputBox {
+/*.inputBox {
   position: absolute;
   top: 0;
   right: 0;
@@ -375,9 +387,9 @@ i {
   text-align: center;
   border: 0;
   text-transform: uppercase !important;
-}
+}*/
 
-.inputBoxOverWritten {
+/*.inputBoxOverWritten {
   top: 0;
   right: 0;
   left: 0;
@@ -387,7 +399,7 @@ i {
   width: 80px;
   text-transform: uppercase !important;
   background: none !important;
-}
+}*/
 
 .overWrittenCells {
   border: 2px solid rgb(194, 1, 1);
