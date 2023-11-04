@@ -44,6 +44,15 @@
 
     <div class="row">
       <div class="col-md-4">
+        <PieChart
+          title="Statuses pie"
+          :series="statusesPieChart.series"
+        ></PieChart>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
         <label>
           Show per page
           <select
@@ -173,6 +182,7 @@ import TableFooter from "../components/table/TableFooter.vue";
 import TableTr from "../components/table/TableTr.vue";
 import TableTd from "../components/table/TableTd.vue";
 import TableTh from "../components/table/TableTh.vue";
+import PieChart from "../components/charts/PieChart.vue";
 
 export default {
   name: "Dashboard",
@@ -185,6 +195,7 @@ export default {
     TableBody,
     TableFooter,
     Pagination,
+    PieChart,
   },
   setup() {
     const now = new Date();
@@ -214,6 +225,7 @@ export default {
     );
 
     let paginationMeta = computed(() => {
+      let stats = {};
       let tmp = {};
       let _data = [];
       let data = UIData;
@@ -249,9 +261,20 @@ export default {
             })
           ) {
             _data.push(element);
+
+            if (stats[element["Status"]]) {
+              stats[element["Status"]]++;
+            } else {
+              stats[element["Status"]] = 1;
+            }
           }
         } else {
           _data.push(element);
+          if (stats[element["Status"]]) {
+            stats[element["Status"]]++;
+          } else {
+            stats[element["Status"]] = 1;
+          }
         }
       });
 
@@ -283,6 +306,7 @@ export default {
           (_, i) => i + 1
         ),
         statuses: [...statusSet],
+        stats: Object.entries(stats).map(([name, y]) => ({ name, y })),
       };
     });
 
@@ -322,6 +346,16 @@ export default {
       return sum;
     };
 
+    const statusesPieChart = ref({
+      series: [
+        {
+          name: "Products",
+          colorByPoint: true,
+          data: paginationMeta.value.stats,
+        },
+      ],
+    });
+
     return {
       hidestatus,
       allCheckBox,
@@ -338,6 +372,8 @@ export default {
       getStatusClass,
       currentPage,
       searchKeywords,
+      PieChart,
+      statusesPieChart,
     };
   },
 };
