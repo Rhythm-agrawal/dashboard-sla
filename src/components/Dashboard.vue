@@ -42,18 +42,33 @@
       </div>
     </div>
 
-    <label>
-      Show per page
-      <select v-model="perPage">
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="500">500</option>
-        <option value="1000">1000</option>
-      </select>
-      entries
-    </label>
+    <div class="row">
+      <div class="col-md-4">
+        <label>
+          Show per page
+          <select
+            v-model="perPage"
+            class="form-select d-inline-block"
+            style="width: unset"
+          >
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+          </select>
+          entries
+        </label>
+      </div>
 
-    <input type="search" placeholder="Search" v-model="searchKeywords" />
+      <div class="col-md-2 offset-md-6">
+        <input
+          type="search"
+          placeholder="Search"
+          v-model="searchKeywords"
+          class="form-control"
+        />
+      </div>
+    </div>
 
     <!-- Main Table Design -->
     <Table>
