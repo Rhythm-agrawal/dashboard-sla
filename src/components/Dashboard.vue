@@ -327,14 +327,14 @@ export default {
   gap: 15px;
 }
 
-table {
+/* table {
   width: 100%;
   white-space: nowrap !important;
-}
+}*/
 
-table td {
+/* table td {
   position: relative;
-}
+}*/
 
 i {
   cursor: pointer;
@@ -422,12 +422,12 @@ table tr th {
   text-align: center;
 }
 
-td,
+/*td,
 th {
   padding: 2px !important;
   width: 100px;
   border: 1px solid black;
-}
+}*/
 
 /* CSS variables */
 :root {
@@ -440,33 +440,33 @@ th {
 
 /* Styling based on CSS variables */
 .announced {
-  width: 1%;
+  /*width: 1%;*/
   background-color: var(--announced-bg);
 }
 .launched {
-  width: 1%;
+  /*width: 1%;*/
   background-color: var(--launched-bg);
 }
 .launchedwithipu {
-  width: 1%;
+  /*width: 1%;*/
   background-color: var(--launchedwithipu-bg);
 }
 .discontinued {
-  width: 1%;
+  /*width: 1%;*/
   background-color: var(--discontinued-bg);
 }
 .default {
-  width: 1%;
+  /*width: 1%;*/
   background-color: var(--default-bg);
 }
 
 .reference {
-  width: 1%;
+  /*width: 1%;*/
   background-color: #00b0f0;
 }
 
 .released {
-  width: 1%;
+  /*width: 1%;*/
   background-color: #7fff00;
 }
 
@@ -511,7 +511,7 @@ th {
 }
 
 .width1 {
-  width: 1%;
+  /*width: 1%;*/
   /* white-space: nowrap !important; */
 }
 </style>

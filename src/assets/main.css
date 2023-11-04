@@ -5,7 +5,7 @@ table {
 }
 
 
-input[type="text"] {
+/*input[type="text"] {
   position: absolute;
   right: 0;
   left: 0;
@@ -13,4 +13,4 @@ input[type="text"] {
   bottom: 0;
   text-align: center;
   border: 0;
-}
+} */
