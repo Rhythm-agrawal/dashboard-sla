@@ -1,15 +1,16 @@
 <template>
-  <div class="pagination">
-    <span>
-      <a
+  <nav aria-label="Pagination">
+    <ul class="pagination">
+      <li
         v-for="number in data"
-        role="button"
-        :class="'paginate_button ' + (number === currentPage ? 'active' : '')"
-        @click="callback(number)"
-        >{{ number }}</a
+        :class="'page-item' + (number === activePage ? ' active' : '')"
       >
-    </span>
-  </div>
+        <a role="button" class="page-link" @click="callback(number)">{{
+          number
+        }}</a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
@@ -18,6 +19,7 @@ export default {
   props: {
     data: Array,
     callback: Function,
+    activePage: Number,
   },
   setup() {
     //

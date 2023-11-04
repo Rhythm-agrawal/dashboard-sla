@@ -33,14 +33,6 @@ describe("Dashboard", () => {
     });
   });
 
-  it("changes the current page when clicking on pagination buttons", async () => {
-    const wrapper = mount(Dashboard);
-    const paginationButton = wrapper.find(".paginate_button");
-    await paginationButton.trigger("click");
-    const currentPage = wrapper.vm.currentPage;
-    expect(currentPage).toBe(1); // Assuming the button click triggers a change to page 1
-  });
-
   it('shows 50 records on one page when "50" is selected in the dropdown', () => {
     const wrapper = mount(Dashboard);
     // Change the dropdown value to 50

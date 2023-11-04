@@ -124,7 +124,11 @@
       </TableBody>
 
       <TableFooter>
-        <Pagination :data="paginationMeta.pages" :callback="setCurrentPage" />
+        <Pagination
+          :activePage="currentPage"
+          :data="paginationMeta.pages"
+          :callback="setCurrentPage"
+        />
       </TableFooter>
     </Table>
     <!-- End of Table Design -->
@@ -296,65 +300,6 @@ export default {
 </script>
 
 <style>
-.pagination {
-  width: 100%;
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-.pagination .paginate_button {
-  box-sizing: border-box;
-  display: inline-block;
-  min-width: 1.5em;
-  padding: 0.5em 1em;
-  margin-left: 2px;
-  text-align: center;
-  text-decoration: none !important;
-  cursor: pointer;
-  color: inherit !important;
-  border: 1px solid rgba(0, 0, 0, 0);
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0);
-}
-.pagination .paginate_button.active,
-.pagination .paginate_button:hover {
-  color: inherit !important;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  background-color: rgba(0, 0, 0, 0.05);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    color-stop(0%, rgba(230, 230, 230, 0.05)),
-    color-stop(100%, rgba(0, 0, 0, 0.05))
-  );
-  background: -webkit-linear-gradient(
-    top,
-    rgba(230, 230, 230, 0.05) 0%,
-    rgba(0, 0, 0, 0.05) 100%
-  );
-  background: -moz-linear-gradient(
-    top,
-    rgba(230, 230, 230, 0.05) 0%,
-    rgba(0, 0, 0, 0.05) 100%
-  );
-  background: -ms-linear-gradient(
-    top,
-    rgba(230, 230, 230, 0.05) 0%,
-    rgba(0, 0, 0, 0.05) 100%
-  );
-  background: -o-linear-gradient(
-    top,
-    rgba(230, 230, 230, 0.05) 0%,
-    rgba(0, 0, 0, 0.05) 100%
-  );
-  background: linear-gradient(
-    to bottom,
-    rgba(230, 230, 230, 0.05) 0%,
-    rgba(0, 0, 0, 0.05) 100%
-  );
-}
-
 .fas.fa-times {
   display: none;
 }
