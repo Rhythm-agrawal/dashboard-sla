@@ -67,6 +67,15 @@
             </li>
           </ul>
         </div>
+        <form class="d-flex" role="search">
+          <input
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            v-model="searchKeywords"
+            class="form-control me-2"
+          />
+        </form>
       </div>
     </nav>
 
@@ -95,15 +104,6 @@
           </select>
           entries
         </label>
-      </div>
-
-      <div class="col-md-2 offset-md-6">
-        <input
-          type="search"
-          placeholder="Search"
-          v-model="searchKeywords"
-          class="form-control"
-        />
       </div>
     </div>
 
