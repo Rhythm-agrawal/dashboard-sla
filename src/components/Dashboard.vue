@@ -558,61 +558,6 @@ th {
   border: 1px solid black;
 }*/
 
-/* CSS variables */
-:root {
-  --announced-bg: green;
-  --launched-bg: #00b0f0;
-  --launchedwithipu-bg: yellow;
-  --discontinued-bg: red;
-  --default-bg: #ccc;
-}
-
-/* Styling based on CSS variables */
-.announced,
-.announced td,
-.announced th {
-  /*width: 1%;*/
-  background-color: var(--announced-bg);
-}
-.launched,
-.launched td,
-.launched th {
-  /*width: 1%;*/
-  background-color: var(--launched-bg);
-}
-.launchedwithipu,
-.launchedwithipu td,
-.launchedwithipu th {
-  /*width: 1%;*/
-  background-color: var(--launchedwithipu-bg);
-}
-.discontinued,
-.discontinued td,
-.discontinued th {
-  /*width: 1%;*/
-  background-color: var(--discontinued-bg);
-}
-.default,
-.default td,
-.default th {
-  /*width: 1%;*/
-  background-color: var(--default-bg);
-}
-
-.reference,
-.reference td,
-.reference th {
-  /*width: 1%;*/
-  background-color: #00b0f0;
-}
-
-.released,
-.released td,
-.released th {
-  /*width: 1%;*/
-  background-color: #7fff00;
-}
-
 .partial {
   width: 1%;
   background-color: #ffa500;
