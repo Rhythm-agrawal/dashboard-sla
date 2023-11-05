@@ -57,6 +57,12 @@
             </li>
 
             <li class="nav-item">
+              <a @click="toggleProductsStatsChart" className="btn nav-link"
+                >Toggle Chart</a
+              >
+            </li>
+
+            <li class="nav-item">
               <ThemeSwitcher className="nav-link" />
             </li>
           </ul>
@@ -64,7 +70,7 @@
       </div>
     </nav>
 
-    <div class="row">
+    <div v-if="showProductStats" class="row">
       <div class="col-md-4">
         <PieChart
           title="Statuses pie"
@@ -260,6 +266,7 @@ export default {
     let hidestatus = ref([]);
     let allCheckBox = ref([]);
     const searchKeywords = ref("");
+    const showProductStats = ref(false);
 
     /***** COMPUTED PROPERTIES *****/
     const wwData = computed(
@@ -367,6 +374,8 @@ export default {
 
     /***** METHODS *****/
     const setCurrentPage = (page) => (currentPage.value = page);
+    const toggleProductsStatsChart = () =>
+      (showProductStats.value = !showProductStats.value);
     const hideShowALLstatus = () => {
       if (!document.querySelector(".styled").checked) {
         hidestatus.value = [];
@@ -417,6 +426,8 @@ export default {
       searchKeywords,
       PieChart,
       statusesPieChart,
+      showProductStats,
+      toggleProductsStatsChart,
     };
   },
 };
