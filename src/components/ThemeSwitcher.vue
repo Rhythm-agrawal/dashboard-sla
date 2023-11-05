@@ -29,6 +29,14 @@ export default {
         "data-bs-theme",
         isDarkTheme.value ? "dark" : "light"
       );
+
+      //for hightcharts only
+      const bodyElement = document.querySelector("body");
+      if (isDarkTheme.value) {
+        bodyElement.classList.add("highcharts-dark");
+      } else {
+        bodyElement.classList.remove("highcharts-dark");
+      }
     };
     // Watch for changes in the isDarkTheme property
     watch(isDarkTheme, applyTheme);

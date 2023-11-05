@@ -1,5 +1,6 @@
 <template>
   <highcharts
+    class="highchart-chart"
     :options="{
       ...defaultPieOptions,
       title: { text: title },
