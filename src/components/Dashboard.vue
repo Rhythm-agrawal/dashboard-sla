@@ -145,26 +145,22 @@
               </TableTd>
             </TableTr>
 
-            <TableTr
-              v-for="(v, k) in data[cores]"
-              :class="getStatusClass(status)"
-            >
+            <TableTr v-for="(v, k) in data[cores]">
               <!-- product -->
 
               <TableTd
-                :class="[
-                  getStatusClass(status),
-                  'text-nowrap',
-                  'productColumn',
-                ]"
+                :style="{ backgroundColor: statusesColors[status] }"
+                class="productColumn text-nowrap"
                 >{{ v.Product }}</TableTd
               >
 
               <!-- Lithography -->
-              <TableTd>{{ v.Lithography }}</TableTd>
+              <TableTd :style="{ backgroundColor: statusesColors[status] }">{{
+                v.Lithography
+              }}</TableTd>
 
               <!-- Threads -->
-              <TableTd>
+              <TableTd :style="{ backgroundColor: statusesColors[status] }">
                 <div class="innerCells">
                   <input
                     class="w-100 border-0"
@@ -176,7 +172,7 @@
               </TableTd>
 
               <!-- Base Freq -->
-              <TableTd>
+              <TableTd :style="{ backgroundColor: statusesColors[status] }">
                 <div class="innerCells">
                   <input
                     class="w-100 border-0"
@@ -188,7 +184,7 @@
               </TableTd>
 
               <!-- Max Turbo Freq -->
-              <TableTd>
+              <TableTd :style="{ backgroundColor: statusesColors[status] }">
                 <div class="innerCells">
                   <input
                     class="w-100 border-0"
@@ -258,6 +254,13 @@ export default {
         ) / 7
       ),
       numofday: now.getDay(),
+    };
+
+    const statusesColors = {
+      Launched: "green",
+      Announced: "blue",
+      Discontinued: "red",
+      "Launched (with IPU)": "yellow",
     };
 
     /***** Reactive properties*****/
@@ -356,21 +359,13 @@ export default {
           (_, i) => i + 1
         ),
         statuses: [...statusSet],
-        stats: Object.entries(stats).map(([name, y]) => ({ name, y })),
+        stats: Object.entries(stats).map(([name, y]) => ({
+          name,
+          y,
+          color: statusesColors[name],
+        })),
       };
     });
-
-    const getStatusClass = (status) => {
-      const formattedStatus = status
-        ? status
-            .toLowerCase()
-            .split(" ")
-            .join("_")
-            .replace(/[^a-z]/gi, "")
-        : "";
-      console.log(formattedStatus);
-      return formattedStatus || "default";
-    };
 
     /***** METHODS *****/
     const setCurrentPage = (page) => (currentPage.value = page);
@@ -421,13 +416,13 @@ export default {
       paginationMeta,
       setCurrentPage,
       calstatusRowspan,
-      getStatusClass,
       currentPage,
       searchKeywords,
       PieChart,
       statusesPieChart,
       showProductStats,
       toggleProductsStatsChart,
+      statusesColors,
     };
   },
 };
