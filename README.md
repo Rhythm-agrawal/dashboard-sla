@@ -2,6 +2,10 @@
 
 This README provides an overview of the project setup, the progress made, code choices and decisions, and how to run the application locally. Additionally, it includes documentation for bonus features that have been implemented.
 
+#### Video Demonstration
+
+[Watch the video demonstration](https://www.loom.com/share/b9429e2fb23040e4828bb6089634d93e?sid=896b64c8-3428-49f2-8559-897d1a4fdd2d)
+
 ## Tasks Completed
 
 ### 1. Refactor and Enhancement
