@@ -110,7 +110,7 @@ This README provides an overview of the project setup, the progress made, code c
 
 - **Status:** Completed
 - **Code Choices and Decisions:**
-  - Implemented test cases for the "Dashboard.vue" component to cover various scenarios.
+  - Implemented test cases for the "Dashboard.vue" component to cover a few scenarios.
   - Enhances the stability and maintainability of the application.
 
 ## Local Setup
@@ -129,6 +129,18 @@ To run the application locally, follow these steps:
    npm run dev
    ```
 
-3. Access the application at the specified URL in your browser.
+3. Compile and hot-reload for development:
+
+   ```sh
+   npm run build
+   ```
+
+4. Run tes cases:
+
+   ```sh
+   npm test
+   ```
+
+5. Access the application at the specified URL in your browser.
 
 Enjoy using the application with all the implemented enhancements and bonus features!
